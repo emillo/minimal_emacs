@@ -304,7 +304,8 @@ Minimalistic config, for the moment.
 #+end_src
 
 **** Custom functions
-#+begin_src elisp
+These serve to link a midish song file to use in an org mode template:
+#+begin_src elisp :tangle init.el
   (defun mil-org-file-link (basedir)
     (let ((file (read-file-name
                   "File da linkare: " basedir)))
@@ -313,6 +314,20 @@ Minimalistic config, for the moment.
   (defun mil-midish-song-org-link ()
     (mil-org-file-link "~/Documenti/Musica/MidishSongs/"))
 #+end_src
+
+This one, courtesy of [[http://yummymelon.com/devnull/converting-a-markdown-region-to-org-revisited.html][Charles Choi's blog]], converts a markdown region into org (needs the program `pandoc` installed):
+#+begin_src elisp :tangle init.el
+  (defun mil-markdown-to-org-region (start end)
+    "Convert Markdown formatted text in region (START, END) to Org.
+
+  This command requires that pandoc (man page `pandoc(1)') be
+  installed."
+    (interactive "r")
+    (shell-command-on-region
+     start end
+     "pandoc -f markdown -t org --wrap=preserve" t t))
+#+end_src
+
 
 
 **** Org-capture templates

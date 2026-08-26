@@ -160,6 +160,24 @@
   ("C-c C-o" . org-open-at-point-global)
   ("C-x C-a" . org-agenda))
 
+(defun mil-org-file-link (basedir)
+  (let ((file (read-file-name
+                "File da linkare: " basedir)))
+    (concat "[[file:" file "]]")))
+
+(defun mil-midish-song-org-link ()
+  (mil-org-file-link "~/Documenti/Musica/MidishSongs/"))
+
+(defun mil-markdown-to-org-region (start end)
+  "Convert Markdown formatted text in region (START, END) to Org.
+
+This command requires that pandoc (man page `pandoc(1)') be
+installed."
+  (interactive "r")
+  (shell-command-on-region
+   start end
+   "pandoc -f markdown -t org --wrap=preserve" t t))
+
 (use-package org-capture
   :ensure nil
   :bind ("C-c c" . org-capture)
