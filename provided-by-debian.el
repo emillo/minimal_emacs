@@ -137,26 +137,27 @@
   :pin manual
   :custom
   (org-roam-completion-everywhere t)
-  (org-roam-db-autosync-mode t)
   (org-roam-db-location "~/.emacs.d/zettelkasten.db")
   (org-roam-directory
     (file-truename
       (concat (file-name-as-directory org-directory ) "zettel")))
   (org-roam-node-display-template
     (concat "${title:*}"
-      (propertize "${tags:20}" 'face 'org-tag))
-    (org-roam-capture-templates
-      '(("d" "default" plain
-          "%?"
-          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-          :unnarrowed t)
-         ("b" "book notes" plain
-           "\n* Dati Libro\n\nAutore: %^{Autore}\nTitolo: ${title}\nAnno: %^{Anno}\n\n* Sommario\n\n%?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
-           :unnarrowed t)
-         ("p" "project" plain "* Obiettivi\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
-           :unnarrowed t))))
+      (propertize "${tags:20}" 'face 'org-tag)))
+  (org-roam-capture-templates
+    '(("d" "default" plain
+        "%?"
+        :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+        :unnarrowed t)
+       ("b" "book notes" plain
+         "\n* Dati Libro\n\nAutore: %^{Autore}\nTitolo: ${Titolo}\nAnno: %^{Anno}\n\n* Sommario\n\n%?"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+         :unnarrowed t)
+       ("p" "project" plain "* Obiettivi\n\n%?\n\n* Tasks\n\n** TODO Add initial tasks\n\n* Dates\n\n"
+         :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: Project")
+         :unnarrowed t)))
+  :config
+  (org-roam-db-autosync-mode 1)
   :bind
   ("C-c n l" . org-roam-buffer-toggle)
   ("C-c n f" . org-roam-node-find)
